@@ -1,12 +1,10 @@
 'use client'
 import { useEffect, useState } from "react";
-import Link from "next/link";
+import { Icon } from "@iconify/react";
 
 export default function ScrollToTop() {
   const [isVisible, setIsVisible] = useState(false);
 
-  // Top: 0 takes us all the way back to the top of the page
-  // Behavior: smooth keeps it smooth!
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -15,7 +13,6 @@ export default function ScrollToTop() {
   };
 
   useEffect(() => {
-    // Button is displayed after scrolling for 500 pixels
     const toggleVisibility = () => {
       if (window.pageYOffset > 300) {
         setIsVisible(true);
@@ -25,26 +22,20 @@ export default function ScrollToTop() {
     };
 
     window.addEventListener("scroll", toggleVisibility);
-
     return () => window.removeEventListener("scroll", toggleVisibility);
   }, []);
 
   return (
-    <div className="fixed bottom-8 right-8 z-999">
-      <div className="flex items-center gap-2.5">
-        <Link href={"https://themewagon.com/themes/venus-nextjs/"} target="_blank" className="hidden lg:block bg-primary text-sm hover:bg-blue-700 text-white px-4 py-3.5 leading-none rounded-lg font-medium text-nowrap">
-          Get This Template
-        </Link>
-        {isVisible && (
-          <div
-            onClick={scrollToTop}
-            aria-label="scroll to top"
-            className="back-to-top flex h-10 w-10 cursor-pointer items-center justify-center rounded-md bg-[#102C46] text-white shadow-md transition duration-300 ease-in-out hover:bg-dark"
-          >
-            <span className="mt-[6px] h-3 w-3 rotate-45 border-l border-t border-white"></span>
-          </div>
-        )}
-      </div>
+    <div className="fixed bottom-6 right-6 z-999">
+      {isVisible && (
+        <button
+          onClick={scrollToTop}
+          aria-label="Scroll to top"
+          className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-xl bg-primary text-white shadow-lg transition-all duration-300 hover:bg-blue-700 hover:scale-110 active:scale-95"
+        >
+          <Icon icon="solar:arrow-up-bold" width="22" height="22" />
+        </button>
+      )}
     </div>
   );
 }
